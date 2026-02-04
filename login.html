@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GMS Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+<div class="login-container">
+    <h2>Grievance Management System</h2>
+
+    <form id="loginForm">
+        <label for="role">Login As</label>
+        <select id="role" required>
+            <option value="">-- Select Role --</option>
+            <option value="student">Student</option>
+            <option value="authority">Authority</option>
+            <option value="admin">Admin</option>
+        </select>
+
+        <label for="username">Username / Roll No</label>
+        <input type="text" id="username" placeholder="Enter username" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter password" required>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <p id="error"></p>
+</div>
+
+<script src="login.js"></script>
+</body>
+</html>
