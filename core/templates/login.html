@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+
+<div class="bg">
+    <div class="login-box">
+        <img class="logo" src="{% static 'images/logo.png' %}">
+        <h2>NIT Andhra Pradesh</h2>
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+        <form method="POST">
+            {% csrf_token %}
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button>Login</button>
+        </form>
+        <p class="link">
+            Don’t have account?
+            <a href="{% url 'register' %}">Register</a>
+        </p>
+    </div>
+
+</div>
+
+</body>
+</html>

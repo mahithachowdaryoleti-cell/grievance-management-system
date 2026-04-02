@@ -1,0 +1,234 @@
+{% if messages %}
+    {% for message in messages %}
+        <div style="color: green; font-weight: bold; padding:10px;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Student Dashboard</title>
+
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="sidebar">
+
+   <h3>STUDENT PORTAL</h3>
+
+   <a href="{% url 'home' %}">Dashboard</a>
+
+   <a href="{% url 'file_complaint' %}">File Complaint</a>
+
+   <a href="{% url 'my_complaints' %}">My Complaints</a>
+
+   <div class="dropdown">
+
+   <a href="#">Self Help</a>
+
+   <div class="dropdown-content">
+
+   <a href="{% url 'faqs' %}">FAQs</a>
+
+   <a href="{% url 'reset_password' %}">Reset Password</a>
+
+   <a href="{% url 'maintenance_request' %}">Maintenance Request</a>
+
+   </div>
+
+   </div>
+
+    <a href="{% url 'profile' %}">Profile</a>
+
+    <a href="{% url 'logout' %}">Logout</a>
+
+ </div>
+
+
+
+
+ <div class="main">
+
+
+
+ <div class="topbar">
+
+ <h2>Welcome, {{ request.user.first_name }}</h2>
+
+ <a href="{% url 'file_complaint' %}" class="btn">
+ + File New Complaint
+ </a>
+
+ </div>
+
+
+  {% if messages %}
+
+  {% for message in messages %}
+
+   <div class="alert">
+
+   {{ message }}
+
+  </div>
+
+  {% endfor %}
+
+  {% endif %}
+
+  <div class="cards">
+
+  <div class="card">
+
+   <h3>Total Complaints</h3>
+
+  <p>{{ total }}</p>
+
+  </div>
+
+
+  <div class="card">
+
+  <h3>Resolved</h3>
+
+  <p>{{ resolved }}</p>
+
+  </div>
+
+
+  <div class="card">
+
+   <h3>Pending</h3>
+
+   <p>{{ pending }}</p>
+
+   </div>
+
+   </div>
+
+
+
+
+   <div class="card">
+
+   <h3>My Complaints</h3>
+
+   <table>
+
+  <tr>
+
+   <th>Title</th>
+
+   <th>Status</th>
+
+   <th>Date</th>
+
+   <th>Feedback</th>
+
+   </tr>
+
+   {% for grievance in grievances %}
+
+   <tr>
+
+   <td>
+
+   <a href="{% url 'complaint_detail' grievance.id %}">
+
+   {{ grievance.title }}
+
+   </a>
+
+   </td>
+
+   <td>{{ grievance.status }}</td>
+
+   <td>{{ grievance.created_at|date:"d M Y" }}</td>
+
+   <td>
+
+   {% if grievance.status == "Resolved" %}
+
+   <a href="{% url 'submit_feedback' grievance.id %}" class="btn-small">
+
+   Give Feedback
+
+   </a>
+
+   {% else %}
+
+   Pending
+
+   {% endif %}
+
+   </td>
+
+   </tr>
+
+   {% empty %}
+
+   <tr>
+
+   <td colspan="4">No complaints submitted</td>
+
+   </tr>
+
+   {% endfor %}
+
+  </table>
+
+   </div>
+
+   </div>
+
+
+
+
+ <div class="right">
+
+  <div class="card">
+
+  <h3>Live Status Tracker</h3>
+
+  <p>Total : {{ total }}</p>
+
+  <p>Resolved : {{ resolved }}</p>
+
+  <p>Pending : {{ pending }}</p>
+
+  </div>
+
+
+  <div class="card">
+
+  <h3>Self Help</h3>
+
+  <ul>
+
+   <li><a href="{% url 'faqs' %}">FAQs</a></li>
+
+   <li><a href="{% url 'reset_password' %}">Reset Password</a></li>
+
+   <li><a href="{% url 'maintenance_request' %}">Maintenance Request</a></li>
+
+  </ul>
+
+  </div>
+
+ </div>
+</div>
+
+
+
+</body>
+
+</html>

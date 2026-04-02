@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Submit Feedback</title>
+
+<style>
+
+.container{
+width:400px;
+margin:auto;
+margin-top:50px;
+padding:20px;
+border:1px solid #ccc;
+border-radius:8px;
+}
+
+label{
+display:block;
+margin-top:10px;
+}
+
+button{
+margin-top:15px;
+padding:10px;
+background:#3498db;
+color:white;
+border:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Feedback for Complaint</h2>
+
+<p><b>{{ grievance.title }}</b></p>
+
+<form method="POST">
+{% csrf_token %}
+
+<label>Rating</label>
+
+<select name="rating">
+
+<option value="1">1 - Poor</option>
+<option value="2">2 - Fair</option>
+<option value="3">3 - Good</option>
+<option value="4">4 - Very Good</option>
+<option value="5">5 - Excellent</option>
+
+</select>
+
+<label>Comments</label>
+
+<textarea name="comments"></textarea>
+
+<button type="submit">Submit Feedback</button>
+
+</form>
+
+</div>
+
+</body>
+
+</html>

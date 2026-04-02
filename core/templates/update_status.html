@@ -1,0 +1,19 @@
+<h2>Update Complaint Status</h2>
+
+<form method="POST">
+{% csrf_token %}
+
+<label>Status</label>
+
+<select name="status">
+<option>Assigned</option>
+<option>In Progress</option>
+<option>Resolved</option>
+</select>
+
+<label>Remarks</label>
+<textarea name="remarks"></textarea>
+
+<button type="submit">Update</button>
+
+</form>

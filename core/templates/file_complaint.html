@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>File Complaint</title>
+<link rel="stylesheet" href="{% static 'css/complaint.css' %}">
+</head>
+
+<body>
+
+<h2>Submit Grievance</h2>
+
+<form method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+
+<label>Complaint Title</label>
+<input type="text" name="title" required>
+
+<label>Category</label>
+<select name="category">
+{% for c in categories %}
+<option value="{{ c.category_name }}">{{ c.category_name }}</option>
+{% endfor %}
+</select>
+
+<label>Description</label>
+<textarea name="description" required></textarea>
+
+<label>Attachment</label>
+<input type="file" name="attachment">
+
+<button type="submit">Submit Complaint</button>
+
+</form>
+
+</body>
+</html>

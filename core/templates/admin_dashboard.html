@@ -1,0 +1,275 @@
+
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI';
+            background: #f4f6f9;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 230px;
+            height: 100vh;
+            background: linear-gradient(180deg, #1c1c1c, #2c5364);
+            color: white;
+            padding: 20px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #ddd;
+            text-decoration: none;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
+        }
+
+        .sidebar a:hover {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+
+        /* Main */
+        .main {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .header {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* Cards */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #555;
+        }
+
+        .card p {
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+
+        th {
+            background: #2c5364;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #f9f9f9;
+        }
+
+        /* Status */
+        .status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            color: white;
+            font-size: 12px;
+        }
+
+        .pending {
+            background: orange;
+        }
+
+        .resolved {
+            background: green;
+        }
+
+        .inprogress {
+            background: #007bff;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>ADMIN</h2>
+
+        <a href="{% url 'home' %}">Dashboard</a>
+        <a href="{% url 'profile' %}">Profile</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+
+    <!-- Main -->
+    <div class="main">
+
+        <div class="header">Admin Dashboard</div>
+
+        <!-- Cards -->
+        <div class="cards">
+            <div class="card">
+                <h3>Total</h3>
+                <p>{{ total }}</p>
+            </div>
+
+            <div class="card">
+                <h3>Resolved</h3>
+                <p>{{ resolved }}</p>
+            </div>
+
+            <div class="card">
+                <h3>Pending</h3>
+                <p>{{ pending }}</p>
+            </div>
+
+            <div class="card">
+                <h3>Categories</h3>
+                <p>{{ categories }}</p>
+            </div>
+
+            <div class="card">
+                <h3>Staff</h3>
+                <p>{{ authorities }}</p>
+            </div>
+        </div>
+
+    <form method="GET">
+    <input type="date" name="date">
+    <input type="text" name="search" placeholder="Search complaints">
+
+    <select name="status">
+        <option value="">All</option>
+        <option value="Pending">Pending</option>
+        <option value="Resolved">Resolved</option>
+    </select>
+
+    <button type="submit">Filter</button>
+</form>
+
+        <!-- Recent Complaints -->
+        <h3>Recent Complaints</h3>
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Status</th>
+            </tr>
+
+            {% for r in recent %}
+            <tr>
+                <td>{{ r.id }}</td>
+                <td>{{ r.title }}</td>
+                <td>
+                    {% if r.status == "Pending" %}
+                        <span class="status pending">Pending</span>
+                    {% elif r.status == "Resolved" %}
+                        <span class="status resolved">Resolved</span>
+                    {% else %}
+                        <span class="status inprogress">{{ r.status }}</span>
+                    {% endif %}
+                </td>
+                <td>
+                   {% if not g.authority %}
+                  <a href="{% url 'assign_complaint' r.id %}" class="btn">Assign</a>
+                   {% else %}
+                      Assigned
+                 {% endif %}
+</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <!-- All Complaints -->
+        <h3>All Complaints</h3>
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Assigned To</th>
+            </tr>
+
+            {% for g in grievances %}
+            <tr>
+                <td>{{ g.id }}</td>
+                <td>{{ g.title }}</td>
+
+                <td>
+                    {% if g.status == "Pending" %}
+                        <span class="status pending">Pending</span>
+                    {% elif g.status == "Resolved" %}
+                        <span class="status resolved">Resolved</span>
+                    {% else %}
+                        <span class="status inprogress">{{ g.status }}</span>
+                    {% endif %}
+                </td>
+
+                <td>
+                    {{ g.authority.user.username|default:"Not Assigned" }}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" style="text-align:center;">
+                    No complaints available
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>

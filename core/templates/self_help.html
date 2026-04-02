@@ -1,0 +1,32 @@
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+<div class="main">
+
+<h2>Self Help Center</h2>
+
+<div class="help-cards">
+
+<div class="help-card">
+<h3>FAQs</h3>
+<p>Find answers to commonly asked questions regarding complaints.</p>
+<a href="{% url 'faqs' %}" class="btn">View FAQs</a>
+</div>
+
+<div class="help-card">
+<h3>Reset Password</h3>
+<p>Forgot your password? Reset it securely.</p>
+<a href="{% url 'reset_password' %}" class="btn">Reset Password</a>
+</div>
+
+<div class="help-card">
+<h3>Maintenance Request</h3>
+<p>Submit infrastructure related issues.</p>
+<a href="{% url 'maintenance_request' %}" class="btn">Submit Request</a>
+</div>
+
+</div>
+
+</div>

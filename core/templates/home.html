@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>GMS Home</title>
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+
+<body>
+
+<div class="sidebar">
+<h2>GMS</h2>
+
+<a href="{% url 'home' %}">🏠 Dashboard</a>
+<a href="{% url 'student' %}">🎓 Student</a>
+<a href="{% url 'staff' %}">🛠 Staff</a>
+<a href="{% url 'admin_dashboard' %}">🧑‍💼 Admin</a>
+
+</div>
+
+<div class="main">
+
+<div class="top-header">
+
+<div class="left">
+    <img src="{% static 'images/logo.png' %}" class="logo">
+    <span>NIT Andhra Pradesh – Complaint Management System</span>
+</div>
+
+<div class="right">
+    <span class="user">Welcome, {{ request.user.username }}</span>
+    <a href="{% url 'logout' %}" class="logout">Logout</a>
+</div>
+
+</div>
+
+
+
+<!-- HEADER IMAGE -->
+<div class="banner">
+<img src="{% static 'images/college.png' %}">
+</div>
+
+<h1>College Grievance Management System</h1>
+
+<!-- STATS -->
+<div class="cards">
+<div class="card blue">
+Total Complaints {{ total }}
+</div>
+
+<div class="card green">
+Resolved {{ resolved }}
+</div>
+
+<div class="card orange">
+Pending {{ pending }}
+</div>
+</div>
+
+<section>
+<h2>Welcome</h2>
+<p>
+Welcome to the College Grievance Management System (GMS). 
+This portal provides a secure and transparent platform for students, faculty, and staff 
+to register complaints, track their status, and ensure timely resolution by the 
+concerned departments. The system promotes accountability, efficiency, and better 
+communication within the institution.
+</p>
+</section>
+
+<section>
+<h3>Notifications</h3>
+<ul>
+{% for n in notifications %}
+<li>
+<strong>{{ n.title }}</strong> - {{ n.message }}
+</li>
+{% empty %}
+<li>No notifications available</li>
+{% endfor %}
+</ul>
+</section>
+
+<section>
+<h3>How the System Works</h3>
+<ol>
+<li>User logs into the Grievance Management System.</li>
+<li>The user submits a complaint with required details and attachments.</li>
+<li>The complaint is automatically assigned to the concerned department.</li>
+<li>Department staff review and resolve the issue.</li>
+<li>The user receives updates and can track the complaint status.</li>
+<li>After resolution, the user can provide feedback on the service.</li>
+</ol>
+</section>
+
+<section>
+<h3>Complaint Categories</h3>
+<ul>
+<li>Infrastructure Issues (classrooms, electricity, water supply)</li>
+<li>Academic Concerns (faculty, timetable, examinations)</li>
+<li>Hostel & Accommodation Issues</li>
+<li>Library Services</li>
+<li>IT & Network Support (WiFi, portal access)</li>
+<li>Administrative Services</li>
+<li>Cafeteria / Canteen Services</li>
+</ul>
+</section>
+
+<section>
+<h3>User Roles</h3>
+<ul>
+<li><b>Student / User</b> – Submit complaints and track their resolution status.</li>
+<li><b>Department Staff</b> – Review, process, and resolve assigned grievances.</li>
+<li><b>System Administrator</b> – Manage users, departments, reports, and system operations.</li>
+</ul>
+</section>
+
+<section>
+<h2>Why Use This System?</h2>
+<ul>
+<li>Fast and transparent grievance resolution</li>
+<li>Secure digital complaint registration</li>
+<li>Real-time complaint tracking</li>
+<li>Role-based access control</li>
+<li>Centralized complaint management dashboard</li>
+<li>Improved communication between students and administration</li>
+</ul>
+</section>
+
+<section>
+<h2>Contact-Grievance Cell</h2>
+<p>Email: support@gms.edu</p>
+<p>Phone: +91 9876543210</p>
+<p>Office Hours: Monday to Friday, 9 AM to 5 PM</p>
+<p>Address: Grievance Cell, NIT Andhra Pradesh, Tadepalligudem, Andhra Pradesh</p>
+<p>For any queries or assistance, please contact the Grievance Cell during office hours.</p>
+</section>
+
+<footer style="text-align:center;margin-top:20px;padding:10px;background:#f2f2f2;">
+<p>© 2026 College Grievance Management System (GMS)</p>
+<p>Maintained by IT Services Department</p>
+</footer>
+
+</div>
+</body>
+</html>

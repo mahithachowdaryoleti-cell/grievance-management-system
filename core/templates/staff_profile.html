@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Staff Profile</title>
+    <style>
+        body {
+            font-family: 'Segoe UI';
+            background: #f4f6f9;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 220px;
+            height: 100vh;
+            background: #2c5364;
+            color: white;
+            padding: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            margin: 10px 0;
+        }
+
+        .main {
+            flex: 1;
+            padding: 40px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 400px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .title {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .info {
+            margin: 10px 0;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .value {
+            color: #222;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h3>STAFF</h3>
+        <a href="{% url 'staff' %}">Dashboard</a>
+        <a href="{% url 'assigned_complaints' %}">Assigned Complaints</a>
+        <a href="{% url 'profile' %}">Profile</a>
+        <a href="{% url 'logout' %}">Logout</a>
+        <a href="{% url 'edit_profile' %}" class="btn">Edit Profile</a>
+    </div>
+
+    <!-- Main -->
+    <div class="main">
+        <div class="card">
+            <div class="title">Staff Profile</div>
+
+            <div class="info">
+                <span class="label">Name:</span>
+                <span class="value">{{ user.username }}</span>
+            </div>
+
+            <div class="info">
+                <span class="label">Email:</span>
+                <span class="value">{{ user.email }}</span>
+            </div>
+
+            <div class="info">
+                <span class="label">Role:</span>
+                <span class="value">{{ authority.role }}</span>
+            </div>
+
+            <div class="info">
+                <span class="label">Designation:</span>
+                <span class="value">{{ authority.designation }}</span>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

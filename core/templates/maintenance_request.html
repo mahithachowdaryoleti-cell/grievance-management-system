@@ -1,0 +1,28 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+<div class="main">
+
+<h2>Maintenance Request</h2>
+
+<div class="form-card">
+
+<form method="POST">
+{% csrf_token %}
+
+<label>Issue Title</label>
+<input type="text" name="title" required>
+
+<label>Location</label>
+<input type="text" name="location" required>
+
+<label>Description</label>
+<textarea name="description" required></textarea>
+
+<button type="submit" class="btn">Submit Request</button>
+
+</form>
+
+</div>
+
+</div>

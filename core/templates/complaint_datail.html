@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Complaint Details</title>
+
+<style>
+
+.container{
+width:70%;
+margin:auto;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+th,td{
+border:1px solid #ccc;
+padding:10px;
+text-align:center;
+}
+
+th{
+background:#34495e;
+color:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h3>Attachments</h3>
+
+{% for a in grievance.grievanceattachment_set.all %}
+
+<a href="{{ a.file.url }}">Download File</a><br>
+
+{% empty %}
+
+No attachments uploaded
+
+{% endfor %}
+<h2>Complaint Details</h2>
+
+<p><b>Title:</b> {{ grievance.title }}</p>
+<p><b>Category:</b> {{ grievance.category.category_name }}</p>
+<p><b>Authority:</b> {{ grievance.authority.designation }}</p>
+<p><b>Status:</b> {{ grievance.status }}</p>
+<p><b>Description:</b> {{ grievance.description }}</p>
+<p><b>Date:</b> {{ grievance.created_at }}</p>
+
+<h3>Status History</h3>
+
+<table>
+
+<tr>
+<th>Status</th>
+<th>Remarks</th>
+<th>Updated By</th>
+<th>Date</th>
+</tr>
+
+{% for h in history %}
+
+<tr>
+<td>{{ h.status }}</td>
+<td>{{ h.remarks }}</td>
+<td>{{ h.updated_by.username }}</td>
+<td>{{ h.updated_at }}</td>
+</tr>
+
+
+{% empty %}
+
+<tr>
+<td colspan="4">No updates yet</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% if grievance.status == "Resolved" %}
+
+<a href="{% url 'submit_feedback' grievance.id %}">
+Give Feedback
+</a>
+
+{% endif %}
+</div>
+
+</body>
+
+</html>

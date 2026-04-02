@@ -1,0 +1,85 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+<div class="container">
+
+
+
+<div class="sidebar">
+
+<h3>STAFF PORTAL</h3>
+
+<a href="{% url 'home' %}">Dashboard</a>
+
+<a href="{% url 'assigned_complaints' %}">Assigned Complaints</a>
+
+<a href="{% url 'profile' %}">Profile</a>
+
+<a href="{% url 'logout' %}">Logout</a>
+
+</div>
+
+<!-- MAIN CONTENT -->
+
+<div class="main">
+
+<h2>Staff Dashboard</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>Total Assigned</h3>
+<p>{{ total }}</p>
+</div>
+
+<div class="card">
+<h3>Resolved</h3>
+<p>{{ resolved }}</p>
+</div>
+
+<div class="card">
+<h3>Pending</h3>
+<p>{{ pending }}</p>
+</div>
+
+</div>
+
+<h3>Assigned Complaints</h3>
+
+<table>
+
+<tr>
+<th>ID</th>
+<th>Title</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+
+{% for g in grievances %}
+
+<tr>
+
+<td>{{ g.id }}</td>
+
+<td>{{ g.title }}</td>
+
+<td>{{ g.status }}</td>
+
+<td>
+
+<a href="{% url 'update_status' g.id %}">
+Update
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</div>
